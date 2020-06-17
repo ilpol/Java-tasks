@@ -6,14 +6,27 @@ public class Main {
 
     public static void main(String[] args) {
         //1 задача
+        System.out.println(sleepIn(false, false));
+        System.out.println(sleepIn(true, false));
         System.out.println(sleepIn(false, true));
+        System.out.println();
+
         //2 задача
+        System.out.println(sumDouble(1, 2));
+        System.out.println(sumDouble(3, 2));
         System.out.println(sumDouble(2, 2));
+        System.out.println();
+
         //3 задача
+        System.out.println(altPairs("kitten"));
+        System.out.println(altPairs("Chocolate"));
         System.out.println(altPairs("CodingHorror"));
+        System.out.println();
+
         //Задача повышенной сложности
         complexTask("3 3 5\n1 2 3\n4 5 6\n7 8 9\ng 3 2\nr 3 2\nc 2 3\ng 2 2\ng 3 2");
         complexTask("2 3 3\n1 2 4\n3 1 5\nc 2 1\nr 1 2\ng 1 3");
+        System.out.println();
     }
 
     public static boolean sleepIn(boolean weekday, boolean vacation) {
