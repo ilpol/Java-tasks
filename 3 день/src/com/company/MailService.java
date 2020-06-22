@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
@@ -9,12 +10,17 @@ import java.util.function.Consumer;
  * Consumes letters from Consumer interface, stores and gives out them
  * @param <T> type of message in letter
  */
-class MailService<T> implements Consumer {
+class MailService<T> implements Consumer<BaseMessage> {
 
-    MailBox mailBox;
+    Map<String, List<T>> mailBox;
 
     MailService() {
-        mailBox = new MailBox<T>();
+        mailBox = new HashMap<>() {
+            @Override
+            public List<T> get(Object key) {
+                return super.getOrDefault(key, new ArrayList<>());
+            }
+        };
     }
 
     /**
@@ -28,20 +34,14 @@ class MailService<T> implements Consumer {
 
     /**
      * Consumes letters and stores them
-     * @param curItem current letter
+     * @param baseMessage current letter
      */
     @Override
-    public void accept(Object curItem) {
-        BaseMessage message = (BaseMessage) curItem;
+    public void accept(BaseMessage baseMessage) {
+        BaseMessage message = (BaseMessage) baseMessage;
         String to = message.getTo();
-
-        if (mailBox.containsKey(to)) {
-            (mailBox.get(to)).add((T) message.getContent());
-        }
-        else {
-            ArrayList newArray = new ArrayList<>();
-            newArray.add(message.getContent());
-            mailBox.put(message.getTo(),newArray);
-        }
+        if (!mailBox.containsKey(to))
+            mailBox.put(to,  new ArrayList<>());
+        mailBox.get(to).add((T) message.getContent());
     }
 }
