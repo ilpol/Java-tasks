@@ -10,7 +10,7 @@ import java.util.function.Consumer;
  * Consumes letters from Consumer interface, stores and gives out them
  * @param <T> type of message in letter
  */
-class MailService<T> implements Consumer<BaseMessage> {
+class MailService<T> implements Consumer<BaseMessage<T>> {
 
     Map<String, List<T>> mailBox;
 
@@ -34,14 +34,13 @@ class MailService<T> implements Consumer<BaseMessage> {
 
     /**
      * Consumes letters and stores them
-     * @param baseMessage current letter
+     * @param message current letter
      */
     @Override
-    public void accept(BaseMessage baseMessage) {
-        BaseMessage message = (BaseMessage) baseMessage;
+    public void accept(BaseMessage<T> message) {
         String to = message.getTo();
         if (!mailBox.containsKey(to))
             mailBox.put(to,  new ArrayList<>());
-        mailBox.get(to).add((T) message.getContent());
+        mailBox.get(to).add(message.getContent());
     }
 }
