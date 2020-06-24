@@ -46,7 +46,12 @@ public class JdbcExample {
             Countrylanguage countrylanguage = mapToObj(Countrylanguage.class, resultSetCL);
             System.out.printf("countrycode: %s, language: %s\n", countrylanguage.countrycode, countrylanguage.language);
         }
+        resultSet.close();
         resultSet2.close();
+        resultSetCity.close();
+        resultSetCL.close();
+        statementCity.close();
+        statementCL.close();
         statement.close();
         connection.close();
     }
